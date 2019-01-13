@@ -1,4 +1,10 @@
 ;; sudoku solver non-lazy
+(ql:quickload "cells")
+
+(defpackage #:g
+  (:use #:cl #:cells))
+
+(in-package #:g)
 
 (defconstant +row-len+ 9)
 (defconstant +col-len+ 9)
@@ -13,27 +19,37 @@
 
 
 (defmodel square-group ()
-  ((constraining
+  ((unique-squares
     :initform (c-in nil)
-    :initarg :constraining
-    :accessor constraining)))
+    :initarg :unique-squares
+    :accessor unique-squares)))
 
+(every #'(lambda (x) (not (eql x 3)))
+       (list 1 2  4 5))
+(member 3 (list 1 2 4 5))
+(loop for i below 10 unless (oddp i)
+   ;do (print i)
+     collect i end)
+1
 (defmodel square ()
   ((group :accessor group :initform (c-in nil))
-   (exact-val :accessor exact-val :initform (c-in nil)
+   (exact-val :accessor exact-val :initform (c-in 0)
 	      :initarg :exact-val)
    (possible-vals :accessor possible-vals
 		  :initform
 		  (c?
 		    (when (and (group self)
-			       (not (exact-val self)))
-		      (let ((c (constraining (group self))))
+			       (eq 0 (exact-val self)))
+		      (let ((u (unique-squares (group self))))
+			(loop for e in +all-values+
+			   when (member e u) collect
+			     )
 			(remove-if-not
 			 #'(lambda (v)
 			     (every
 			      #'(lambda (x)
 				  (not (eql v (exact-val x))))
-			      c))
+			      u))
 			 +all-values+)))))))
 
 (defun make-square (x)
