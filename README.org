@@ -31,9 +31,9 @@ evaluate when needed
 `:always` only evaluated when read
 
 
-|              | eval during creation | when dependencies change | upon read |
-|--------------+----------------------+--------------------------+-----------|
-| non-lazy     | y                    | y                        | n         |
-| :once-asked  | y                    | n                        | y         |
-| :until-asked | n                    | y                        | n (?)     |
-| :always      | n                    | n                        | y         |
+|              | eval during creation | when dependencies change | upon read | code :initform                     |
+|--------------+----------------------+--------------------------+-----------+------------------------------------|
+| non-lazy     | y                    | y                        | n         | (c? ...                            |
+| :once-asked  | y                    | n                        | y         | (c-formula (:lazy :one-asked) ...) |
+| :until-asked | n                    | y                        | n (?)     | (c_? ..)                           |
+| :always      | n                    | n                        | y         | (c?_ ..)                           |
