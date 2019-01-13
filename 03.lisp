@@ -103,6 +103,7 @@
        append
 	 (subseq col cmi (+ cmi +sq-size+)))))
 
+
 (defun make-groups (squares)
   (loop for r below +row-len+ do
        (loop for c below +col-len+ do
@@ -126,7 +127,6 @@
 		   b)))))
     (make-groups (squares bb))
     bb))
-
 
 (defun search-solution
     (b &key (next
