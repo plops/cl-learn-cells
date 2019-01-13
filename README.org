@@ -18,3 +18,22 @@
 * observer
 
 `defobserver <slot-name> [self [old-value [new-value [old-value-boundp]]]]`
+
+
+* lazy cells
+
+evaluate when needed
+
+`:once-asked` evaluated first time and when read by application code
+
+`:until-asked` becomes unlazy after asked by application code the first time
+
+`:always` only evaluated when read
+
+
+|              | eval during creation | when dependencies change | upon read |
+|--------------+----------------------+--------------------------+-----------|
+| non-lazy     | y                    | y                        | n         |
+| :once-asked  | y                    | n                        | y         |
+| :until-asked | n                    | y                        | n (?)     |
+| :always      | n                    | n                        | y         |
