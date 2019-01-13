@@ -13,6 +13,9 @@
 (defconstant +all-values+ '(1 2 3 4 5 6 7 8 9))
 
 (defparameter *board*
+  (loop for j below +col-len+ collect
+   (loop for i below +row-len+ collect 0))
+  #+nil
   (make-array (list +row-len+ +col-len+)
 	      :element-type '(unsigned-byte 8)
 	      :initial-element 0))
@@ -88,12 +91,12 @@
 	    pos)))))
 
 (defun nth-col (board n)
-  (coerce (elt board n) #'list))
+  (coerce (elt board n) 'list))
 
 (defun nth-row (board n)
-  (map #'list #'(lambda (x) (elt x n)) board))
+  (map 'list #'(lambda (x) (elt x n)) board))
 
-(defun nth-bloack (board r c)
+(defun nth-block (board r c)
   (let ((rmi (* +sq-size+ (floor r +sq-size+)))
 	(cmi (* +sq-size+ (floor c +sq-size+))))
     (loop for col in (subseq board rmi (+ rmi +sq-size+))
