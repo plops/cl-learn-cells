@@ -1,0 +1,20 @@
+# Intro to cells
+
+- http://stefano.dissegna.me/cells-tutorial.html
+
+* a ruled cell
+
+`defmodel`
+`:initform (c? .. self ..)`
+`:unchanged-if #'equal`
+
+`(cells-reset)`
+
+* family
+`defmodel <node-name> (<family>)`
+
+`make-instance '<node-name> :val (c? ..) :kids (c? (the-kids (make-kid '<node-name> :md-name ...`
+
+* observer
+
+`defobserver <slot-name> [self [old-value [new-value [old-value-boundp]]]]`
