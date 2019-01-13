@@ -47,3 +47,13 @@
 			  (every #'exact-val x))
 		      (squares self))))
    (squares :accessor squares :initarg :squares)))
+
+(defmethod print-object ((self board) out)
+  (loop for r below +row-len+ do
+       (loop for c below +col-len+ do
+	    (format out "~a " (exact-val (at (squares self) r c)))
+	    (format out "~%"))))
+
+
+(defun at (board r c)
+  (elt (elt board r) c))
