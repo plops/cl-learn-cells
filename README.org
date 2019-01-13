@@ -8,6 +8,8 @@
 `:initform (c? .. self ..)`
 `:unchanged-if #'equal`
 
+`^<slot-name>` is a short cut for `(<slot-name> self)
+
 `(cells-reset)`
 
 * family
@@ -37,3 +39,49 @@ evaluate when needed
 | :once-asked  | y                    | n                        | y         | (c-formula (:lazy :one-asked) ...) |
 | :until-asked | n                    | y                        | n (?)     | (c_? ..)                           |
 | :always      | n                    | n                        | y         | (c?_ ..)                           |
+
+long names are more descriptive
+c-formula instead of c?/c_?/c?_
+c-input instead of c-in
+
+* drifter cells
+
+increment the value
+
+`(c... (0) <code>)`
+`(c... (<intial value>) <body>)`
+
+* ruled cells with cyclic dependencies
+
+use `with-integrity` in the observer. this prevents an observer to be
+still running, when it is called next
+
+
+use `(cells-reset)` to recover from errors involving cycles
+
+* synapses
+
+specify sensitivity of when to propagate change
+
+`(c? (f-sensitivity <synapse-name> <threshold> <value>))`
+
+code in <value> will always be executed on dependency change but
+result will only be propagated if the change with respect to the
+previously stored value is larger than threshold
+
+
+there is also
+
+`f-delta f-plusp f-zerop`
+
+and new synapses can be defined:
+
+`with-synapse <id> ([var1] [var2] ..) <body>
+
+var1.. will be initialized during when <body> is first run. they
+retain the value between calls
+
+<body> returns (values <return-value> :propagate) if the newly
+computed value is to be passed to other dependent cells otherwise
+it should return 
+(values nil :no-propagate)
