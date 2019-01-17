@@ -6,6 +6,8 @@
 
 (in-package #:g)
 
+(declaim (optimize (debug 3) (safety 3) (speed 0)))
+
 (defconstant +row-len+ 9)
 (defconstant +col-len+ 9)
 (defconstant +sq-size+ 3)
@@ -97,12 +99,12 @@
   (map 'list #'(lambda (x) (elt x n)) board))
 
 (defun nth-block (board r c)
+  (defparameter *bla* board)
   (let ((rmi (* +sq-size+ (floor r +sq-size+)))
 	(cmi (* +sq-size+ (floor c +sq-size+))))
     (loop for col in (subseq board rmi (+ rmi +sq-size+))
        append
 	 (subseq col cmi (+ cmi +sq-size+)))))
-
 
 (defun make-groups (squares)
   (loop for r below +row-len+ do
@@ -121,9 +123,9 @@
 	     'board
 	     :squares
 	     (c-in
-	      (map 'vector
+	      (map 'list
 		   #'(lambda (x)
-		       (map 'vector #'make-square x))
+		       (map 'list #'make-square x))
 		   b)))))
     (make-groups (squares bb))
     bb))
