@@ -1,4 +1,5 @@
 ;; sudoku solver non-lazy
+;; this is currently not working
 (ql:quickload "cells")
 
 (defpackage #:g
@@ -82,15 +83,15 @@
 	    (list (+ r 1) 0))
 	(list r (+ c 1)))))
 
-
 (defun next-to-try (board pos)
   ;; search forward for next empty position, nil if finished
   (let ((pos (next-pos pos)))
     (when pos
       (destructuring-bind (r c) pos
-	(if (exact-val (at board r c))
+	(if (eq 0 (exact-val (at board r c)))
+	    pos
 	    (next-to-try board pos)
-	    pos)))))
+	    )))))
 
 (defun nth-col (board n)
   (coerce (elt board n) 'list))
@@ -99,7 +100,6 @@
   (map 'list #'(lambda (x) (elt x n)) board))
 
 (defun nth-block (board r c)
-  (defparameter *bla* board)
   (let ((rmi (* +sq-size+ (floor r +sq-size+)))
 	(cmi (* +sq-size+ (floor c +sq-size+))))
     (loop for col in (subseq board rmi (+ rmi +sq-size+))
